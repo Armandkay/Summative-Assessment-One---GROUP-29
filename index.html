@@ -1,24 +1,97 @@
-<form id="registrationForm">
-  <label for="name">Name:</label>
-  <input type="text" id="name" name="name" required>
-  <br>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Event Registration Form</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-  <label for="email">Email:</label>
-  <input type="email" id="email" name="email" required>
-  <br>
+  <form id="registrationForm">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required>
+    <br>
 
-  <label for="phone">Phone Number:</label>
-  <input type="tel" id="phone" name="phone" pattern="\(\d{3}\) \d{3}-\d{4}" required>
-  <br>
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+    <br>
 
-  <label for="eventDate">Event Date:</label>
-  <input type="text" id="eventDate" name="eventDate" placeholder="MM/DD/YYYY" pattern="^(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])\/\d{4}$" required>
-  <br>
+    <label for="phone">Phone Number:</label>
+    <input type="tel" id="phone" name="phone" pattern="\(\d{3}\) \d{3}-\d{4}" required>
+    <br>
 
-  <label for="numTickets">Number of Tickets:</label>
-  <input type="number" id="numTickets" name="numTickets" min="1" max="10" required>
-  <br>
+    <label for="eventDate">Event Date:</label>
+    <input type="text" id="eventDate" name="eventDate" placeholder="MM/DD/YYYY" pattern="^(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])\/\d{4}$" required>
+    <br>
 
-  <button type="submit">Register</button>
-</form>
+    <label for="numTickets">Number of Tickets:</label>
+    <input type="number" id="numTickets" name="numTickets" min="1" max="10" required>
+    <br>
+
+    <button type="submit">Register</button>
+  </form>
+
+  <script>
+    const form = document.getElementById('registrationForm');
+
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const nameInput = document.getElementById('name');
+      const nameValue = nameInput.value.trim();
+      const nameRegex = /^[a-zA-Z\s]+$/;
+
+      if (!nameRegex.test(nameValue)) {
+        alert('Name must contain letters and spaces only.');
+        nameInput.focus();
+        return false;
+      }
+
+      const emailInput = document.getElementById('email');
+      const emailValue = emailInput.value.trim();
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      if (!emailRegex.test(emailValue)) {
+        alert('Please enter a valid email address.');
+        emailInput.focus();
+        return false;
+      }
+
+      const phoneInput = document.getElementById('phone');
+      const phoneValue = phoneInput.value.trim();
+      const phoneRegex = /^\(\d{3}\) \d{3}-\d{4}$/;
+
+      if (!phoneRegex.test(phoneValue)) {
+        alert('Please enter a valid phone number in the format (123) 456-7890.');
+        phoneInput.focus();
+        return false;
+      }
+
+      const eventDateInput = document.getElementById('eventDate');
+      const eventDateValue = eventDateInput.value.trim();
+      const eventDateRegex = /^(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])\/\d{4}$/;
+
+      if (!eventDateRegex.test(eventDateValue)) {
+        alert('Please enter a valid event date in MM/DD/YYYY format.');
+        eventDateInput.focus();
+        return false;
+      }
+
+      const numTicketsInput = document.getElementById('numTickets');
+      const numTicketsValue = parseInt(numTicketsInput.value.trim(), 10);
+
+      if (isNaN(numTicketsValue) || numTicketsValue < 1 || numTicketsValue > 10) {
+        alert('Number of tickets must be between 1 and 10.');
+        numTicketsInput.focus();
+        return false;
+      }
+
+      alert('Registration successful!');
+      form.reset();
+    });
+  </script>
+
+</body>
+</html>
 
